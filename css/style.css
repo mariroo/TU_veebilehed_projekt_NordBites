@@ -1,0 +1,909 @@
+/*Nordicbites*/
+
+/* Värvimuutujad: värvi saab kogu lehel muuta ühest kohast. 
+var(--green) kasutab siin määratud väärtust. */
+:root {
+    --green:#2c6a50;/*tumeroheline*/
+    --dark:#191919; /*must*/
+    --muted:#777; /*tumehall*/
+    --cream:#faf8f5; /*heleez, taust*/
+    --line:#e7e1d9; /*hallikas beez*/
+    --pale:#e9f2eb; /*heleroheline*/
+}
+
+/* Kõigile elementidele: padding ja border arvestatakse elemendi laiuse sisse. */
+* {
+    box-sizing:border-box
+}
+
+/* Sujuv kerimine lehel olevate ankrulinkide juurde. */
+html {
+    scroll-behavior:smooth
+}
+
+/* Kogu veebilehe taust, tekstivärv ja vaikimisi kirjatüüp. */
+body {
+    margin:0;
+    background:var(--cream);
+    color:var(--dark);
+    font:15px/1.6 Arial,Helvetica,sans-serif
+}
+
+/* Pealkirjade ja logo kirjatüüp. */
+h1,h2,h3,.brand {
+    font-family:Georgia,'Times New Roman',serif;
+    line-height:1.16
+}
+
+/* h1 pealkiri; clamp() kohandab suurust ekraani laiusega. */
+h1 {
+    font-size:clamp(35px,4.1vw,54px);
+    margin:18px 0
+}
+
+/* h2 pealkirja suurus ja vahed. */
+h2 {
+    font-size:30px;
+    margin:7px 0 32px
+}
+
+/* h3 pealkirja suurus ja vahed. */
+h3 {
+    font-size:18px;
+    margin:0 0 6px
+}
+
+/* Lõikude alumine vahe. */
+p {
+    margin:0 0 15px
+}
+
+/* Lingid pärivad ümbritseva teksti värvi ja neil ei ole alljoont. */
+a {
+    color:inherit;
+    text-decoration:none
+}
+
+/* Nupud ja vormiväljad kasutavad sama fonti kui ülejäänud leht. */
+button,input,select {
+    font:inherit
+}
+
+/* Hiirekursor muutub nuppude kohal käekujuliseks. */
+button {
+    cursor:pointer
+}
+
+/* Sisu maksimaalne laius ja horisontaalne tsentreerimine. */
+.container {
+    width:min(1150px,calc(100% - 48px));
+    max-width:none; /* Tühistab Bootstrapi .container laiuse piirangud. */
+    margin:auto
+}
+
+/* Kõigi lehtede ühine valge päis. */
+.site-header {
+    background:#fff;
+    border-bottom:1px solid var(--line);
+    position:relative;
+    z-index:20
+}
+
+/* Päise elemendid paigutatakse kõrvuti Flexboxiga. */
+.header-row {
+    min-height:78px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:18px
+}
+
+/* Logo ikoon ja tekst paiknevad ühel real. */
+.brand {
+    display:inline-flex;
+    align-items:center;
+    gap:9px;
+    font-weight:bold;
+    font-size:21px;
+    white-space:nowrap
+}
+
+/* PNG-logo: pildil on roheline ring juba olemas */
+.brand-icon {
+    display:block;
+    width:29px;
+    height:29px;
+    object-fit:contain;
+    border-radius:50%;
+    flex-shrink:0;
+}
+
+/* Navigeerimislingid ühel real ja kindla vahega. */
+.nav {
+    display:flex;
+    gap:30px;
+    align-items:center
+}
+
+/* Navigeerimislingi tekst ning aktiivse joone asukoha alus. */
+.nav a {
+    font-size:14px;
+    padding:9px 0;
+    position:relative
+}
+
+/* Aktiivse lehe navigatsioonilink on roheline ja paksus kirjas. */
+.nav a.active {
+    font-weight:bold;
+    color:var(--green)
+}
+
+/* Pseudo-element tekitab aktiivse lingi alla rohelise joone */
+.nav a.active:after {
+    content:"";
+    position:absolute;
+    bottom:3px;
+    left:30%;
+    width:40%;
+    height:2px;
+    background:var(--green)
+}
+
+/* Otsingu ja ostukorvi nupud päise paremas servas. */
+.header-actions {
+    display:flex;
+    align-items:center;
+    gap:12px
+}
+
+/* Üldine ümarate päisenuppude kujundus. */
+.icon-button,.carticon,.menu-button {
+    border:0;
+    background:#f8f7f4;
+    border-radius:100px;
+    min-width:39px;
+    height:39px;
+    display:inline-grid;
+    place-items:center
+}
+
+/* Roheline ostukorvi nupp: HTML-is class="carticon". */
+.carticon {
+    background:var(--green);
+    color:white;
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:0 15px;
+}
+
+/* Bootstrap Icons: ikoonide suurused päises. */
+.icon-button i { font-size:18px; }
+.carticon i { font-size:17px; }
+.menu-button i { font-size:23px; }
+
+/* Hoiab linkide värvid samaks ka Bootstrapi hover-olekus. */
+.brand:hover { color:var(--dark); }
+.carticon:hover { color:white; }
+.site-header .nav a:hover { color:var(--green); }
+
+/* Mobiilimenüü nupp on suurel ekraanil peidus */
+.menu-button {
+    display:none
+}
+
+/* Otsinguväli on alguses peidus */
+.search-bar {
+    display:none;
+    padding-bottom:13px
+}
+
+/* JavaScript lisab klassi open, et otsinguvälja näidata. */
+.search-bar.open {
+    display:block
+}
+
+/* Otsinguvälja ääris, taust ja vahed */
+.search-bar input {
+    width:100%;
+    border:1px solid var(--line);
+    padding:11px 14px;
+    border-radius:8px;
+    background:white
+}
+
+/*Ühise kujundusega tegevusnupud ja nuppudena näivad lingid. */
+.btn {
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:12px 23px;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:bold;
+    font-size:14px;
+    background:transparent
+}
+
+/* Bootstrapi .btn vaikimisi muutuja ei tohi meie nuppude värvi muuta */
+.btn { --bs-btn-color:var(--dark); --bs-btn-hover-color:var(--dark); }
+
+/* Peamine roheline tegevusnupp. */
+.btn.primary {
+    background:var(--green);
+    border-color:var(--green);
+    color:#fff
+}
+
+/* Bootstrapis peab rohelise nupu tekst jääma ka hover-olekus valgeks. */
+.btn.primary:hover { color:#fff; }
+
+
+/* AVALEHE ülemine sissejuhatus: tekst ja foto 2s veerus */
+.hero {
+    padding:68px 0 78px;
+    display:grid;
+    grid-template-columns:1.1fr 1fr;
+    align-items:center;
+    gap:75px;
+    min-height:525px
+}
+
+/* Väike roheline slogan */
+.slogan_1 {
+    color:var(--green);
+    font-size:14px;
+    font-weight:bold;
+    text-transform:uppercase
+}
+/* slogan taust */
+.tag_1 {
+    display:inline-block;
+    background:var(--pale);
+    padding:5px 12px;
+    border-radius:100px
+}
+
+/* Avalehe tekst: Telli värsked... */
+.hero p {
+    color:#666;
+    font-size:16px;
+    margin:21px 0 28px
+}
+
+/* Avalehe tegevusnupud ('vaata tooteid' ja 'Meie lugu') ühel real; vajadusel lähevad järgmisele reale. */
+.hero-buttons {
+    display:flex;
+    gap:13px;
+    flex-wrap:wrap
+}
+
+/* Avalehe suur foto */
+.hero img {
+    width:100%;
+    height:410px;
+    object-fit:cover;
+    border-radius:10px
+}
+
+/*Avalehe: 'kvaliteetne vali' ja 'vaata kõiki tooteid'*/
+.text_1, .text-link {
+    color: var(--green);
+    font-weight: bold;
+    font-size: 16px;
+}
+
+/* Sektsiooni pealkiri ja „Vaata kõiki tooteid” link. */
+.section-heading {
+    display:flex;
+    align-items: flex-start;
+    justify-content:space-between;
+    gap:20px
+}
+
+/* Avalehe 'soovitused' toodete sektsiooni välisvahed */
+.recommendations {
+    padding:30px 0 90px
+}
+
+/* 'Tänased soovitused' */
+.section-heading h2 {
+    margin-bottom:30px
+}
+
+
+/* Tootekaarte näidatakse 3 võrdses veerus (CSS Grid) */
+.product-grid {
+    display:grid;
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    gap:22px
+}
+
+/* Ühe toote kaart, mille sisu asub püstises Flexboxis */
+.product-card {
+    background:white;
+    border:1px solid var(--line);
+    border-radius:11px;
+    overflow:hidden;
+    display:flex;
+    flex-direction:column
+}
+
+/* Ostukorvis oleval tootel kuvatakse tumeroheline ääris. */
+.product-card.product-selected {
+    border:2px solid var(--green);
+}
+
+/* Ostukorvis oleva toote VALITUD silt tootepildi ülaservas. */
+.selected-flag {
+    position:absolute;
+    top:11px;
+    left:11px;
+    background:var(--green);
+    color:white;
+    padding:3px 10px;
+    font-size:10px;
+    border-radius:4px;
+    font-weight:bold;
+}
+
+/* Kui tootel on ka POPULAARNE või UUS silt, paikneb VALITUD selle all. */
+.selected-flag.below-flag {
+    top:39px;
+}
+
+/* Tootefoto fix kõrgus ja sobiv kärpimine */
+.product-card img {
+    width:100%;
+    height:185px;
+    object-fit:cover;
+    display:block
+}
+
+/* Fotoala on aluseks nurgas olevale sildile. */
+.product-image {
+    position:relative
+}
+
+/* Tootefotol asuv väike roheline silt (nt „POPULAARNE”). */
+.flag {
+    position:absolute;
+    top:11px;
+    left:11px;
+    background:var(--green);
+    color:white;
+    padding:3px 10px;
+    font-size:10px;
+    border-radius:4px;
+    font-weight:bold
+}
+
+/* Tootekaardi pealkirja ja allergeenide ala. */
+.product-content {
+    padding:17px 17px 14px;
+    flex:1
+}
+
+/* Tootekaardi väiksem hall selgitustekst. */
+.product-content p {
+    color:#999;
+    font-size:12px;
+    margin:4px 0 0
+}
+
+/* Tootekaardi alumine hinnarea ja nupu ala. */
+.product-bottom {
+    border-top:1px solid var(--line);
+    padding:12px 17px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between
+}
+
+/* Toote hind eristub paksu monospace-kirjaga. */
+.price {
+    font-family:monospace;
+    font-size:18px;
+    font-weight:bold
+}
+
+/* Toote lisamise nupu põhikujundus. */
+.add-button {
+    background:var(--pale);
+    color:var(--green);
+    border:0;
+    border-radius:7px;
+    font-weight:bold;
+    padding:8px 13px
+}
+
+/* Kataloogis olev väike roheline ümar plussnupp. */
+.add-button.circle {
+    border-radius:50%;
+    height:32px;
+    width:32px;
+    padding:0;
+    font-size:21px;
+    background:var(--green);
+    color:white
+}
+
+/* Tootekataloogi sisu ülemine ja alumine vahe. */
+.catalog {
+    padding:60px 0 100px
+}
+
+/* Kategooriafiltrite nupud ühel või mitmel real. */
+.filters {
+    display:flex;
+    flex-wrap:wrap;
+    gap:12px;
+    margin-bottom:30px
+}
+
+/* Kategooriafiltri hele ovaalne nupp. */
+.filter-button {
+    background:#fff;
+    border:1px solid var(--line);
+    border-radius:25px;
+    padding:10px 19px;
+    font-size:13px
+}
+
+/* Valitud kategooriafilter muutub roheliseks. */
+.filter-button.selected {
+    background:var(--green);
+    color:white;
+    border-color:var(--green)
+}
+
+/* 'Tooted' lehekülje alumine roheline ostukorviriba, mis püsib kerides nähtaval. */
+.cart-strip {
+    position:fixed;
+    bottom:0;
+    left:0;
+    width: 100%;
+    background:var(--green);
+    color:#fff;
+    z-index:10
+}
+/* Ostukorviriba tekst ja kassasse mineku link. */
+.cart-strip .container {
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding-top:15px;
+    padding-bottom:15px
+}
+
+/* Ostukorviriba lingi paks kiri. */
+.cart-strip a {
+    font-weight:bold
+}
+
+/* Kui HTML-elemendil on hidden-atribuut, ei näidata riba. */
+.cart-strip[hidden] {
+    display:none
+}
+
+/* Tellimuse leht: vorm vasakul ja kokkuvõte paremal. */
+.checkout {
+    padding:60px 0 85px;
+    display:grid;
+    grid-template-columns:1.7fr 1fr;
+    gap:45px;
+    min-height:550px
+}
+
+/* Tellimuse lehe pealkiri. */
+.checkout h1 {
+    font-size:34px;
+    margin:0 0 6px
+}
+
+/* Tellimusvormi all olev sissejuhatav tekst. */
+.checkout .subtitle {
+    color:var(--muted);
+    margin-bottom:27px
+}
+
+/* Vormiväljad kahes veerus. */
+.form-grid {
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:19px 14px
+}
+
+/* Üks vormiväli koos selle pealkirjaga. */
+.field {
+    display:flex;
+    flex-direction:column;
+    gap:7px
+}
+
+/* Vormivälja nimetuse kujundus. */
+.field label {
+    font-size:13px;
+    font-weight:bold
+}
+
+/* Tekstikastide ja rippmenüü kujundus. */
+.field input,.field select {
+    border:1px solid #d7cfc5;
+    background:transparent;
+    border-radius:10px;
+    padding:12px 13px;
+    width:100%;
+    min-width:0
+}
+
+/* Vormiväli võtab enda alla mõlemad veerud. */
+.field.full {
+    grid-column:1/-1
+}
+
+/* Tellimuse kokkuvõtte valge kast. */
+.summary {
+    align-self:start;
+    border-radius:11px;
+    background:#fff;
+    border:1px solid var(--line);
+    padding:29px
+}
+
+/* Kokkuvõtte pealkiri. */
+.summary h2 {
+    font-size:25px;
+    margin:0 0 20px
+}
+
+/* Ühe ostukorvis oleva toote rida kokkuvõttes. */
+.summary-item {
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding-bottom:12px;
+    margin-bottom:12px;
+    border-bottom:1px solid var(--line)
+}
+
+/* Ostukorvi toote pisipilt. */
+.summary-item img {
+    width:46px;
+    height:46px;
+    object-fit:cover;
+    border-radius:6px
+}
+
+/* Ostukorvi tootenimi. */
+.summary-item .item-name {
+    font: bold 15px Georgia,serif
+}
+
+/* Ostukorvi toote koguse väike tekst. */
+.summary-item .item-qty {
+    color:var(--muted);
+    font-size:12px
+}
+
+/* Toote hind nihutatakse rea paremasse serva. */
+.summary-item strong {
+    margin-left:auto;
+    white-space:nowrap;
+    font-family:monospace
+}
+
+/* Koguse vähendamise ja suurendamise nupud. */
+.qty-control {
+    display:inline-flex;
+    align-items:center;
+    gap:8px
+}
+
+/* Koguse muutmise väikeste nuppude stiil. */
+.qty-control button {
+    border:1px solid var(--line);
+    background:white;
+    border-radius:4px;
+    padding:1px 7px
+}
+
+/* Vahesumma ja pakendi hinna read. */
+.summary-lines {
+    border-bottom:1px solid var(--line);
+    padding:10px 0 17px
+}
+
+/* Kokkuvõtte summarea vasaku ja parema poole joondamine. */
+.summary-line,.summary-total {
+    display:flex;
+    justify-content:space-between;
+    gap:12px;
+    margin-top:10px
+}
+
+/* Vahekokkuvõtte väiksem hall tekst. */
+.summary-line {
+    color:#666;
+    font-size:13px
+}
+
+/* Lõpliku summa rea vahed ja paks kiri. */
+.summary-total {
+    align-items:center;
+    padding:17px 0;
+    font-weight:bold
+}
+
+/* Makstava kogusumma suur roheline number. */
+.summary-total strong {
+    color:var(--green);
+    font-size:24px
+}
+
+/* Tellimuse kinnitamise nupp täidab kokkuvõtte laiuse. */
+.summary .btn {
+    width:100%
+}
+
+/* Tellimuse kinnitamise all olev väike selgitus. */
+.note {
+    color:#999;
+    text-align:center;
+    font-size:14px;
+    margin:18px 0 0
+}
+
+/* Pärast tellimist kuvatava kinnitusteate kujundus. */
+.message {
+    margin-top:18px;
+    padding:13px 16px;
+    border-radius:9px;
+    background:var(--pale);
+    color:var(--green)
+}
+
+/* Peidab kinnitusteate, kuni seda on vaja näidata. */
+.message[hidden] {
+    display:none
+}
+
+/* Tühja ostukorvi teate kujundus. */
+.empty {
+    padding:30px 0;
+    color:var(--muted)
+}
+
+/* Kõigi lehtede ühine jalus. */
+.site-footer {
+    background:#fff;
+    border-top:1px solid var(--line);
+    padding:55px 0 24px
+}
+
+/* Jaluse sisu neljas veerus. */
+.footer-top {
+    display:grid;
+    grid-template-columns:2fr 1fr 1fr 1fr;
+    gap:42px
+}
+
+/* Jaluses olev logo on veidi väiksem. */
+.footer-top .brand {
+    font-size:18px;
+    margin-bottom:14px
+}
+
+/* Jaluse veergude pealkirjad. */
+.footer-top h3 {
+    font-size:16px;
+    margin-bottom:13px
+}
+
+/* Aadressi, lahtiolekuaegade ja kontaktide selgitustekst. */
+.footer-top p {
+    color:#737373;
+    font-size:13px;
+    line-height:1.65
+}
+
+/* Jalus: autoriõigused ja sotsiaalmeedia. */
+.footer-bottom {
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:20px;
+    color:#999;
+    font-size:12px;
+    margin-top:10px
+}
+
+/* Sotsmeedia ikoonide paigutus. */
+.socials {
+    display:flex;
+    gap:12px
+}
+/* Ühe ümara sotsiaalmeedia ikooni kujundus (Bootstrap Icons). */
+.socials a {
+    display:inline-grid;
+    place-items:center;
+    width:30px;
+    height:30px;
+    background:var(--cream);
+    color:#555;
+    border-radius:50%;
+    text-decoration: none;
+}
+
+/* Jätab jaluse alla ruumi fikseeritud ostukorviriba jaoks */
+body:has(.cart-strip:not([hidden])) .site-footer {
+    padding-bottom: 85px;
+}
+
+
+/* Tahvelarvuti ja kitsama ekraani kohandused. */
+@media(max-width:850px) {
+    /* Avalehe ülemine sissejuhatus: tekst ja foto kahes veerus. */
+    .hero {
+        gap:30px;
+        min-height:unset
+    }
+    /* Avalehe suur foto, mis täidab raami lõikamise teel. */
+    .hero img {
+        height:320px
+    }
+    /* Tellimuse leht: vorm vasakul ja kokkuvõte paremal. */
+    .checkout {
+        grid-template-columns:1fr
+    }
+    /* Jaluse sisu neljas veerus. */
+    .footer-top {
+        grid-template-columns:1fr 1fr
+    }
+    /* Navigeerimislingid ühel real ja kindla vahega. */
+    .nav {
+        gap:15px
+    }
+    /* Tootefoto fikseeritud kõrgus ja sobiv kärpimine. */
+    .product-card img {
+        height:155px
+    }
+}
+
+/* Mobiiltelefoni vaate kohandused. */
+@media(max-width:620px) {
+    /* Sisu maksimaalne laius ja horisontaalne tsentreerimine. */
+    .container {
+        width:calc(100% - 28px)
+    }
+    /* Päise elemendid paigutatakse kõrvuti Flexboxiga. */
+    .header-row {
+        min-height:66px
+    }
+    /* Logo ikoon ja tekst paiknevad ühel real. */
+    .brand {
+        font-size:18px
+    }
+    /* Mobiilimenüü nupp on suurel ekraanil peidetud. */
+    .menu-button {
+        display:inline-grid
+    }
+    /* Navigeerimislingid ühel real ja kindla vahega. */
+    .nav {
+        display:none;
+        position:absolute;
+        top:66px;
+        left:0;
+        right:0;
+        background:white;
+        padding:18px;
+        box-shadow:0 8px 12px #0001;
+        flex-direction:column;
+        align-items:flex-start
+    }
+    /* Selle elemendi kujundus. */
+    .nav.open {
+        display:flex
+    }
+    /* Avalehe ülemine sissejuhatus: tekst ja foto kahes veerus. */
+    .hero {
+        padding:36px 0 42px;
+        grid-template-columns:1fr;
+        gap:28px
+    }
+    /* Avalehe suur foto, mis täidab raami lõikamise teel. */
+    .hero img {
+        height:250px
+    }
+    /* Selle elemendi kujundus. */
+    .recommendations,.catalog {
+        padding:20px 0 55px
+    }
+    /* Tootekaarte näidatakse kolmes võrdses veerus (CSS Grid). */
+    .product-grid {
+        grid-template-columns:repeat(2,minmax(0,1fr));
+        gap:12px
+    }
+    /* Tootefoto fikseeritud kõrgus ja sobiv kärpimine. */
+    .product-card img {
+        height:130px
+    }
+    /* Selle elemendi kujundus. */
+    .product-content,.product-bottom {
+        padding:11px
+    }
+    /* Selle elemendi kujundus. */
+    .product-content h3 {
+        font-size:16px
+    }
+    /* Tootekaardi väiksem hall selgitustekst. */
+    .product-content p {
+        font-size:11px
+    }
+    /* Toote hind eristub paksu monospace-kirjaga. */
+    .price {
+        font-size:15px
+    }
+    /* Sektsiooni pealkiri ja „Vaata kõiki tooteid” link. */
+    .section-heading {
+        align-items:start
+    }
+    /* Roheline tekstilink sektsiooni paremas servas. */
+    .text-link {
+        padding-top:13px;
+        font-size:12px
+    }
+    /* Tellimuse leht: vorm vasakul ja kokkuvõte paremal. */
+    .checkout {
+        padding:35px 0 60px;
+        gap:25px
+    }
+    /* Vormiväljad kahes veerus. */
+    .form-grid {
+        grid-template-columns:1fr
+    }
+    /* Vormiväli võtab enda alla mõlemad veerud. */
+    .field.full {
+        grid-column:auto
+    }
+    /* Tellimuse kokkuvõtte valge kast. */
+    .summary {
+        padding:20px
+    }
+    /* Jaluse sisu neljas veerus. */
+    .footer-top {
+        grid-template-columns:1fr 1fr;
+        gap:20px
+    }
+    /* Selle elemendi kujundus. */
+    .footer-top>div:first-child {
+        grid-column:1/-1
+    }
+    /* Jaluse alumine rida: autoriõigused ja sotsiaalmeedia. */
+    .footer-bottom {
+        margin-top:28px;
+        flex-wrap:wrap
+    }
+}
+
+/* "Telli kohe" nupu animatsioon avalehel */
+.add-button.clicked {
+    animation: button-click 0.6s ease;
+}
+@keyframes button-click {
+    0% {
+        transform: scale(1);
+        background-color: var(--pale);
+    }
+    50% {
+        transform: scale(0.85);
+        background-color: var(--green);
+        color: white;
+    }
+    100% {
+        transform: scale(1);
+        background-color: var(--pale);
+    }
+}
+
+
