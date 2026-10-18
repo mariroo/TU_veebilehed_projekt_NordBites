@@ -1,5 +1,5 @@
 /* =========================================================
-   NORDICBITES – NÄIDIS-E-POOD
+   NORDICBITES:  NÄIDIS-E-POOD
    =========================================================
    1. Toodete andmed
    2. Ostukorvi andmete salvestamine ja arvutused
@@ -574,8 +574,7 @@ if (orderForm) {
         message.textContent =
             "Aitäh, " +
             firstName +
-            "! Näidistellimus on vormistatud. " +
-            "Tegelikku tellimust ei saadeta pagarikotta.";
+            "! Tellimus on vormistatud. ";
 
         // Muudab kinnitusteate nähtavaks.
         message.hidden = false;
